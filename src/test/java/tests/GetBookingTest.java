@@ -39,7 +39,7 @@ public class GetBookingTest {
 
         // Проверяем, что каждый объект Booking содержит валидное значение bookingid
         for (Booking booking : bookings) {
-            assertThat(booking.getBookingId()).isGreaterThan(0); // bookingid должен быть больше 0
+            assertThat(booking.getBookingid()).isGreaterThan(0); // bookingid должен быть больше 0
         }
     }
 

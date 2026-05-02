@@ -13,6 +13,7 @@ public class Booking {
     }
 
     // Геттер и сеттер
+
     public int getBookingid() {
         return bookingid;
     }
@@ -21,3 +22,5 @@ public class Booking {
         this.bookingid = bookingid;
     }
 }
+
+
