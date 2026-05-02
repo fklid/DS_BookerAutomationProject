@@ -21,6 +21,11 @@ dependencies {
     // Jackson for JSON processing
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.15.2'
+
+    // build.gradle (Groovy)
+    testImplementation 'org.assertj:assertj-core:3.25.3'
+
+
 }
 
 test {
