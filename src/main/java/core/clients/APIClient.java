@@ -62,6 +62,17 @@ public class APIClient {
                 .extract()
                 .response();
     }
-
+    public Response getBookingById(int bookingId) {
+        return getRequestSpec()
+                .when()
+                .get(ApiEndpoints.BOOKING.getPath() + "/" + bookingId)
+                .then()
+                .statusCode(200) // 200 OK для существующего бронирования
+                .extract()
+                .response();
+    }
 }
+
+
+
 

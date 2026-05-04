@@ -1,0 +1,31 @@
+package tests;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import core.clients.APIClient;
+import io.restassured.response.Response;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+public class GetBookingById {
+
+    private APIClient apiClient;
+    private ObjectMapper objectMapper;
+
+    // Инициализация API клиента перед каждым тестом
+    @BeforeEach
+    public void setup() {
+        apiClient = new APIClient();
+        objectMapper = new ObjectMapper();
+    }
+
+    @Test
+    public void testGetBooking() throws Exception {
+        // Выполняем запрос к эндпоинту /booking через APIClient
+        Response response = apiClient.getBooking();
+
+        // Проверяем, что статус-код ответа равен 200
+        assertThat(response.getStatusCode()).isEqualTo(200);
+    }
+}
