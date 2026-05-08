@@ -6,9 +6,10 @@ import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static io.qameta.allure.Allure.step;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class GetBookingById {
+public class GetBookingByIdTest {
 
     private APIClient apiClient;
     private ObjectMapper objectMapper;
@@ -21,11 +22,26 @@ public class GetBookingById {
     }
 
     @Test
-    public void testGetBooking() throws Exception {
+    public void testGetBookingById() throws Exception {
         // Выполняем запрос к эндпоинту /booking через APIClient
-        Response response = apiClient.getBooking();
+        Response response = apiClient.getBooking( );
 
         // Проверяем, что статус-код ответа равен 200
         assertThat(response.getStatusCode()).isEqualTo(200);
     }
+
+    @Test
+    public void testGetBookingByIdBodyCheck() throws Exception {
+
+        Response response = apiClient.getBooking( );
+
+        step(   "Проверки параметров ответа", () -> {
+            assertThat(response.getStatusCode()).isEqualTo(200);
+        }
+        );
+    }
+
+
+
+
 }
