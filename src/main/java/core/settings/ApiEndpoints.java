@@ -4,6 +4,7 @@ public enum ApiEndpoints {
     PING( "/ping"),
     BOOKING("/booking");
 
+
     private final String path;
 
     ApiEndpoints(String path) {
@@ -12,5 +13,9 @@ public enum ApiEndpoints {
 
     public String getPath() {
         return path;
+    }
+
+    public String getPathById(int id) {
+        return path + "/" + id;
     }
 }

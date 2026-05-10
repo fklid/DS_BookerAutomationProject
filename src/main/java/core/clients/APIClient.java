@@ -53,7 +53,7 @@ public class APIClient {
                 .response();
     }
 
-    public Response getBooking() {
+    public Response getBooking(int i) {
         return getRequestSpec()
                 .when()
                 .get(ApiEndpoints.BOOKING.getPath()) // Используем ENUM дляэндпоинта /booking
@@ -62,10 +62,10 @@ public class APIClient {
                 .extract()
                 .response();
     }
-    public Response getBookingById(int bookingId) {
+    public Response getBookingById(int id) {
         return getRequestSpec()
                 .when()
-                .get(ApiEndpoints.BOOKING.getPath() + "/" + bookingId)
+                .get(ApiEndpoints.BOOKING.getPathById(id))
                 .then()
                 .statusCode(200) // 200 OK для существующего бронирования
                 .extract()
