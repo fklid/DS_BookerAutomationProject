@@ -40,13 +40,12 @@ public class GetBookingByIdTest {
         step(   "Проверки параметров ответа", () -> {
             assertThat(response.getStatusCode()).isEqualTo(200);
 
+            String responseBody = response.getBody().asString();
+            BookingById.BookingByIdOne booking3 = objectMapper.readValue(responseBody, BookingById.BookingByIdOne.class);
 
-                    String responseBody = response.getBody().asString();
-                   BookingById.BookingByIdOne booking3 = objectMapper.readValue(responseBody, BookingById.BookingByIdOne.class);
-
-                    assertThat(booking3.getFirstname()).isNotNull();
-                    assertThat(booking3.getLastname()).isNotNull();
-                    assertThat(booking3.isDepositpaid()).isIn(true, false);
+            assertThat(booking3.getFirstname()).isNotNull();
+            assertThat(booking3.getLastname()).isNotNull();
+            assertThat(booking3.isDepositpaid()).isIn(true, false);
         }
         );
     }
