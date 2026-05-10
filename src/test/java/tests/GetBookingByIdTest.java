@@ -33,7 +33,7 @@ public class GetBookingByIdTest {
     @Test
     public void testGetBookingByIdBodyCheck() throws Exception {
 
-        Response response = apiClient.getBooking( );
+        Response response = apiClient.getBooking(5);
 
         step(   "Проверки параметров ответа", () -> {
             assertThat(response.getStatusCode()).isEqualTo(200);
