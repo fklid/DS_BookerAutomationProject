@@ -21,6 +21,7 @@ public class Booking {
     public void setBookingid(int bookingid) {
         this.bookingid = bookingid;
     }
+
 }
 
 
