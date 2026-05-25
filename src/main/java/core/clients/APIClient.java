@@ -23,6 +23,7 @@ public class APIClient {
     public APIClient() {
         this.baseUrl = determineBaseUrl();
     }
+
     private String determineBaseUrl() {
        String environment = System.getProperty( "env","test");
        String configFileName = "application-" + environment+ ".properties";
@@ -72,7 +73,11 @@ public class APIClient {
                 .post(ApiEndpoints.AUTH.getPath())
                 .then()
                 .statusCode(200)
-                .extract().response();
+                .extract()
+                .response();
+
+
+
 
         token = response.jsonPath().getString("token");
     }
@@ -99,6 +104,7 @@ public class APIClient {
     }
     public Response getBookingById(int id) {
         return getRequestSpec()
+                .pathParam("id", id)
                 .when()
                 .get(ApiEndpoints.BOOKING.getPathById(id))
                 .then()
@@ -118,6 +124,18 @@ public class APIClient {
                 .extract()
                 .response();
     }
+    public Response createBooking(String newBooking) {
+        return getRequestSpec()
+                .body(newBooking)
+                .log().all()
+                .when()
+                .post(ApiEndpoints.BOOKING.getPath())
+                .then()
+                .log().all()
+                .extract()
+                .response();
+    }
+
 }
 
 
