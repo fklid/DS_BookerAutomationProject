@@ -102,16 +102,21 @@ public class APIClient {
                 .extract()
                 .response();
     }
-    public Response getBookingById(int id) {
+    public Response getBookingById(int id,int expectedStatusCode) {
         return getRequestSpec()
                 .pathParam("id", id)
                 .when()
                 .get(ApiEndpoints.BOOKING.getPathById(id))
                 .then()
-                .statusCode(200) // 200 OK для существующего бронирования
+                .statusCode(expectedStatusCode)
                 .extract()
                 .response();
     }
+
+    public Response getBookingById(int bookingId) {
+        return getBookingById(bookingId, 200); // 200 OK для существующего бронирования
+    }
+
 
     public Response deleteBooking(int bookingId) {
         return getRequestSpec()

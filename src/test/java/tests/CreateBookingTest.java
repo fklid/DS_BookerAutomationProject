@@ -82,6 +82,7 @@ public class CreateBookingTest
         apiClient.createToken("admin", "password123");
         apiClient.deleteBooking(createdBooking.getBookingid());
 
-        // assertThat(apiClient.getBookingById(createdBooking.getBookingid()).getStatusCode()).isEqualTo(404);
+         assertThat(apiClient.getBookingById(createdBooking.getBookingid()).getStatusCode()).isEqualTo(404);
+
     }
 }
