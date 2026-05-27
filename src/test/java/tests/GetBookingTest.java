@@ -42,6 +42,4 @@ public class GetBookingTest {
             assertThat(booking.getBookingid()).isGreaterThan(0); // bookingid должен быть больше 0
         }
     }
-
-
 }

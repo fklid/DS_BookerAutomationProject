@@ -49,14 +49,16 @@ public class CreateBookingTest
     @Severity(SeverityLevel.CRITICAL)
     @Owner("")
     public void createBooking() throws JsonProcessingException {
+        //Выполняем запрос к эндпоинту,booking через APIClient
         Response response = step("Создаем новое бронирование", () -> {
             String requestBody = objectMapper.writeValueAsString(newBooking);
             return apiClient.createBooking(requestBody);
         });
-
+        // Проверяем, что статус-код ответа 200
         step("Проверка отправки запроса", () ->
                 assertThat(response.getStatusCode()).isEqualTo(200));
 
+        // Разбираем тело ответа(десериализируем) в объект Booking
         createdBooking = step("Извлечение параметров ответа", () -> {
             String responseBody = response.getBody().asString();
             return objectMapper.readValue(responseBody, CreatedBooking.class);
