@@ -11,16 +11,12 @@ import io.restassured.response.Response;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.io.IOException;
-
-import static io.qameta.allure.Allure.step;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-public class CreateBookingTest
-{
+public class CreateBookingTest {
+
     private APIClient apiClient;
     private ObjectMapper objectMapper;
     private NewBooking newBooking; // Новый объектдля созданного бронирования
@@ -41,41 +37,31 @@ public class CreateBookingTest
         newBooking.setBookingdates(new BookingDates("2026-06-01", "2026-07-01")); // Примеры дат
         newBooking.setAdditionalneeds("Breakfast");
 
-        }
-
+    }
 
     @Test
-    @Feature("Booking")
-    @Severity(SeverityLevel.CRITICAL)
-    @Owner("")
     public void createBooking() throws JsonProcessingException {
-        //Выполняем запрос к эндпоинту,booking через APIClient
-        Response response = step("Создаем новое бронирование", () -> {
-            String requestBody = objectMapper.writeValueAsString(newBooking);
-            return apiClient.createBooking(requestBody);
-        });
-        // Проверяем, что статус-код ответа 200
-        step("Проверка отправки запроса", () ->
-                assertThat(response.getStatusCode()).isEqualTo(200));
+        // Выполняем запрос к эндпоинту /booking через APIClient
+        String requestBody = objectMapper.writeValueAsString(newBooking);
+        Response response = apiClient.createBooking(requestBody);
 
-        // Разбираем тело ответа(десериализируем) в объект Booking
-        createdBooking = step("Извлечение параметров ответа", () -> {
-            String responseBody = response.getBody().asString();
-            return objectMapper.readValue(responseBody, CreatedBooking.class);
-        });
+        // Проверяем, что статус-код ответа равен 200
+        assertThat(response.getStatusCode()).isEqualTo(200);
 
-        step("Проверка что бронирование создано", () ->
-                assertThat(createdBooking).isNotNull());
+        // Десериализуем тело ответа в объект Booking
+        String responseBody = response.asString();
+        createdBooking = objectMapper.readValue(responseBody, CreatedBooking.class);
 
-        step("Проверка получаемых после создания параметров бронирования", () -> {
-            assertEquals(newBooking.getFirstname(), createdBooking.getBooking().getFirstname());
-            assertEquals(newBooking.getLastname(), createdBooking.getBooking().getLastname());
-            assertEquals(newBooking.getTotalprice(), createdBooking.getBooking().getTotalprice());
-            assertEquals(newBooking.isDepositpaid(), createdBooking.getBooking().isDepositpaid());
-            assertEquals(newBooking.getBookingdates().getCheckin(), createdBooking.getBooking().getBookingdates().getCheckin());
-            assertEquals(newBooking.getBookingdates().getCheckout(), createdBooking.getBooking().getBookingdates().getCheckout());
-            assertEquals(newBooking.getAdditionalneeds(), createdBooking.getBooking().getAdditionalneeds());
-        });
+        // Проверяем, что тело ответа содержит объект нового бронирования
+        assertThat(createdBooking).isNotNull();
+        assertEquals(createdBooking.getBooking().getFirstname(), newBooking.getFirstname());
+        assertEquals(createdBooking.getBooking().getFirstname(), newBooking.getFirstname());
+        assertEquals(createdBooking.getBooking().getLastname(), newBooking.getLastname());
+        assertEquals(createdBooking.getBooking().getTotalprice(), newBooking.getTotalprice());
+        assertEquals(createdBooking.getBooking().isDepositpaid(), newBooking.isDepositpaid());
+        assertEquals(createdBooking.getBooking().getBookingdates().getCheckin(), newBooking.getBookingdates().getCheckin());
+        assertEquals(createdBooking.getBooking().getBookingdates().getCheckout(), newBooking.getBookingdates().getCheckout());
+        assertEquals(createdBooking.getBooking().getAdditionalneeds(), newBooking.getAdditionalneeds());
     }
 
     @AfterEach
@@ -84,7 +70,8 @@ public class CreateBookingTest
         apiClient.createToken("admin", "password123");
         apiClient.deleteBooking(createdBooking.getBookingid());
 
-         assertThat(apiClient.getBookingById(createdBooking.getBookingid()).getStatusCode()).isEqualTo(404);
+        assertThat(apiClient.getBookingById(createdBooking.getBookingid()).getStatusCode()).isEqualTo(404);
 
     }
+
 }
