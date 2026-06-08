@@ -8,6 +8,7 @@ import io.restassured.response.Response;
 import io.restassured.specification.FilterableRequestSpecification;
 import io.restassured.specification.FilterableResponseSpecification;
 import io.restassured.specification.RequestSpecification;
+import core.models.NewBooking;
 
 import java.io.IOException;
 import java.io.InputStream;
