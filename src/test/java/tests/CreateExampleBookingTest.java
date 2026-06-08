@@ -45,7 +45,8 @@ public class CreateExampleBookingTest
     @Test
     @Feature("Booking")
     @Severity(SeverityLevel.CRITICAL)
-    @Owner("")
+    @Owner("DNShkolnik")
+
     public void createBooking() throws JsonProcessingException {
         //Выполняем запрос к эндпоинту,booking через APIClient
         Response response = step("Создаем новое бронирование", () -> {

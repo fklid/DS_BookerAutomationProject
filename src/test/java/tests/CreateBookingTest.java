@@ -41,6 +41,10 @@ public class CreateBookingTest {
     }
 
     @Test
+    @Feature("Booking")
+    @Severity(SeverityLevel.CRITICAL)
+    @Owner("DNShkolnik")
+
     public void createBooking() throws JsonProcessingException {
         // Выполняем запрос к эндпоинту /booking через APIClient
         String requestBody = objectMapper.writeValueAsString(newBooking);

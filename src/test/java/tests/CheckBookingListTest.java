@@ -43,6 +43,10 @@ public class CheckBookingListTest {
     }
 
     @Test
+    @Feature("Booking")
+    @Severity(SeverityLevel.CRITICAL)
+    @Owner("DNShkolnik")
+
     @Step("Проверка: создание бронирования и получение списка")
     public void testGetBookingList() throws Exception {
         // Создаём бронирование

@@ -5,6 +5,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import core.clients.APIClient;
 import core.models.Booking;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Owner;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -28,6 +32,9 @@ public class BookingDeleteTest {
         }
 
         @Test
+        @Feature("Booking")
+        @Severity(SeverityLevel.CRITICAL)
+        @Owner("DNShkolnik")
 
         public void bookingDeleteTest() throws Exception {
             Response response = apiClient.getBooking();

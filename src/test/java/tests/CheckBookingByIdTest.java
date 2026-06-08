@@ -4,6 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import core.clients.APIClient;
 import core.models.BookingDates;
 import core.models.NewBooking;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Owner;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,33 +43,37 @@ public class CheckBookingByIdTest {
     }
 
     @Test
+    @Feature("Booking")
+    @Severity(SeverityLevel.CRITICAL)
+    @Owner("DNShkolnik")
+
     public void testGetBookingByIdBodyCheck() throws Exception {
 
         // ШАГ 1: Отправляем POST запрос и получаем Response
-        Response response = step("Send POST request to create new booking", () -> {
+        Response response = step("Получение зпапроса  POST на создание бронирования", () -> {
             String requestBody = objectMapper.writeValueAsString(newBooking);
             return apiClient.createBooking(requestBody);
         });
 
         // ШАГ 2: Проверяем успешность создания
-        step("Make sure that request was sent successfully", () ->
+        step("Проверка получения статус кода", () ->
                 assertThat(response.getStatusCode()).isEqualTo(200)
         );
 
         // ШАГ 3: Извлекаем ID созданного бронирования из JSON ответа
-        createdBookingId = step("Obtain id of created booking", () ->
+        createdBookingId = step("Получение  id созданного бронирования", () ->
                 response.jsonPath().getInt("bookingid")
         );
 
         // ШАГ 4: Делаем GET запрос по ID и сразу десериализуем ответ в объект SingleBooking
-        returnedBooking = step("Send GET request and obtain new booking from server by id", () -> {
+        returnedBooking = step("Отправка запроса  GET на получение созданного бронирования по id", () -> {
             Response getResponse = apiClient.getBookingById(createdBookingId);
             assertThat(getResponse.getStatusCode()).isEqualTo(200);
             return objectMapper.readValue(getResponse.getBody().asString(), NewBooking.class);
         });
 
         // ШАГ 5: Сравниваем отправленные данные с полученными
-        step("Verify booking data matches", () -> {
+        step("Проверьте данных бронирования", () -> {
             assertEquals(newBooking.getFirstname(), returnedBooking.getFirstname());
             assertEquals(newBooking.getLastname(), returnedBooking.getLastname());
             assertEquals(newBooking.getTotalprice(), returnedBooking.getTotalprice());

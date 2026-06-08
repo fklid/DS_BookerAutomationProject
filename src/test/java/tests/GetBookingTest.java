@@ -5,6 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import core.clients.APIClient;
 import static org.assertj.core.api.Assertions.assertThat;
 import core.models.Booking;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Owner;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,6 +27,10 @@ public class GetBookingTest {
     }
 
     @Test
+    @Feature("Booking")
+    @Severity(SeverityLevel.CRITICAL)
+    @Owner("DNShkolnik")
+
     public void testGetBooking() throws Exception {
         // Выполняем запрос к эндпоинту /booking через APIClient
         Response response = apiClient.getBooking();
