@@ -42,7 +42,7 @@ public class UpdateBookingTest {
         // ИСХОДНЫЕ данные для создания бронирования
         originalBooking = new NewBooking();
         originalBooking.setFirstname("John");
-        originalBooking.setLastname("Smith");
+        originalBooking.setLastname("Loree");
         originalBooking.setTotalprice(100);
         originalBooking.setDepositpaid(true);
         originalBooking.setBookingdates(new BookingDates("2026-06-01", "2026-06-10"));
@@ -50,12 +50,12 @@ public class UpdateBookingTest {
 
         // ОБНОВЛЕННЫЕ данные (которые будем отправлять в PUT запросе)
         updatedBooking = new NewBooking();
-        updatedBooking.setFirstname("Martin");              // Изменили имя
-        updatedBooking.setLastname("Coock");                // Изменили фамилию
-        updatedBooking.setTotalprice(250);                // Изменили цену
-        updatedBooking.setDepositpaid(false);             // Изменили depositpaid
-        updatedBooking.setBookingdates(new BookingDates("2026-07-01", "2026-07-15"));  // Изменили даты
-        updatedBooking.setAdditionalneeds("Dinner");      // Изменили доп. потребности
+        updatedBooking.setFirstname("Martin");
+        updatedBooking.setLastname("Coock");
+        updatedBooking.setTotalprice(250);
+        updatedBooking.setDepositpaid(false);
+        updatedBooking.setBookingdates(new BookingDates("2026-07-01", "2026-07-15"));
+        updatedBooking.setAdditionalneeds("Dinner");
     }
 
     @Test
@@ -81,7 +81,7 @@ public class UpdateBookingTest {
                 createResponse.jsonPath().getInt("bookingid")
         );
 
-        step("Get authorization token", () ->
+        step("Запрос токена на обновление", () ->
                 apiClient.createToken("admin", "password123")
         );
 
@@ -104,7 +104,7 @@ public class UpdateBookingTest {
         });
 
         // Проверяем, что все поля обновились
-        step("Verify all fields were updated correctly", () -> {
+        step("Проверка обновленныхь параметров", () -> {
             assertEquals(updatedBooking.getFirstname(), returnedBooking.getFirstname());
             assertEquals(updatedBooking.getLastname(), returnedBooking.getLastname());
             assertEquals(updatedBooking.getTotalprice(), returnedBooking.getTotalprice());
