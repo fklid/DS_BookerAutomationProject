@@ -34,7 +34,7 @@ public class CheckBookingByIdTest {
 
         // Просто готовим данные в памяти, на сервер пока не отправляем
         newBooking = new NewBooking();
-        newBooking.setFirstname("Jone");
+        newBooking.setFirstname("John");
         newBooking.setLastname("Constantin");
         newBooking.setTotalprice(150);
         newBooking.setDepositpaid(true);
@@ -65,7 +65,7 @@ public class CheckBookingByIdTest {
                 response.jsonPath().getInt("bookingid")
         );
 
-        // ШАГ 4: Делаем GET запрос по ID и сразу десериализуем ответ в объект SingleBooking
+        // ШАГ 4: Делаем GET запрос по ID и сразу десериализуем ответ в объект
         returnedBooking = step("Отправка запроса  GET на получение созданного бронирования по id", () -> {
             Response getResponse = apiClient.getBookingById(createdBookingId);
             assertThat(getResponse.getStatusCode()).isEqualTo(200);
