@@ -150,6 +150,19 @@ public class APIClient {
                 .response();
     }
 
+    public Response patchBooking(int bookingId, String patchBody) {
+        return getRequestSpec()
+                .pathParam("id", bookingId)
+                .body(patchBody)
+                .log().all()
+                .when()
+                .patch(ApiEndpoints.BOOKING.getPath() + "/{id}") // Используем метод PATCH
+                .then()
+                .log().all()
+                .extract()
+                .response();
+    }
+
 }
 
 

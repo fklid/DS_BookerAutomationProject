@@ -81,7 +81,7 @@ public class UpdateBookingTest {
                 createResponse.jsonPath().getInt("bookingid")
         );
 
-        step("Запрос токена на обновление", () ->
+        step("Запрос токена на обновление ", () ->
                 apiClient.createToken("admin", "password123")
         );
 
