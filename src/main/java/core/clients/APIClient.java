@@ -163,6 +163,44 @@ public class APIClient {
                 .response();
     }
 
+    public Response getBookingsWithFilters(String firstName, String lastName) {
+        RequestSpecification spec = getRequestSpec();
+
+        if (firstName != null) {
+            spec = spec.queryParam("firstname", firstName);
+        }
+        if (lastName != null) {
+            spec = spec.queryParam("lastname", lastName);
+        }
+
+        return spec
+                .when()
+                .get(ApiEndpoints.BOOKING.getPath())
+                .then()
+                .log().all()
+                .extract()
+                .response();
+    }
+
+    public Response getBookingsWithDates(String checkin, String checkout) {
+        RequestSpecification spec = getRequestSpec();
+
+        if (checkin != null) {
+            spec = spec.queryParam("checkin", checkin);
+        }
+        if (checkout != null) {
+            spec = spec.queryParam("checkout", checkout);
+        }
+
+        return spec
+                .when()
+                .get(ApiEndpoints.BOOKING.getPath())
+                .then()
+                .log().all()
+                .extract()
+                .response();
+    }
+
 }
 
 
