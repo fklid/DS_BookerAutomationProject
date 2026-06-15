@@ -17,6 +17,7 @@ dependencies {
     // Allure
     testImplementation 'io.qameta.allure:allure-junit5:2.24.0'
     testImplementation 'io.qameta.allure:allure-rest-assured:2.24.0'
+    implementation group: 'io.qameta.allure', name: 'allure-junit5', version: '2.29.0'
 
     // Jackson for JSON processing
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
