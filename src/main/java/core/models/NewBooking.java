@@ -1,14 +1,15 @@
 package core.models;
 
-public class BookingById {
+public class NewBooking {
 
-    public static class BookingByIdOne {
+
         private String firstname;
         private String lastname;
         private int totalprice;
         private boolean depositpaid;
-        private Bookingdates bookingdates;
+        private BookingDates bookingdates;
         private String additionalneeds;
+
 
 
         public String getFirstname() {
@@ -27,11 +28,11 @@ public class BookingById {
             this.additionalneeds = additionalneeds;
         }
 
-        public Bookingdates getBookingdates() {
+        public BookingDates getBookingdates() {
             return bookingdates;
         }
 
-        public void setBookingdates(Bookingdates bookingdates) {
+        public void setBookingdates(BookingDates bookingdates) {
             this.bookingdates = bookingdates;
         }
 
@@ -60,26 +61,3 @@ public class BookingById {
         }
     }
 
-
-    public static class Bookingdates {
-        private String checkin;
-        private String checkout;
-
-        public String getCheckin() {
-            return checkin;
-        }
-
-        public void setCheckin(String checkin) {
-            this.checkin = checkin;
-        }
-
-        public String getCheckout() {
-            return checkout;
-        }
-
-        public void setCheckout(String checkout) {
-            this.checkout = checkout;
-        }
-    }
-
-}

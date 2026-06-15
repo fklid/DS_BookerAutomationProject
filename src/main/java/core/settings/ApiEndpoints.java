@@ -3,7 +3,6 @@ package core.settings;
 public enum ApiEndpoints {
     PING( "/ping"),
     BOOKING("/booking"),
-    BOOKING_BY_ID("/booking/%d"),
     AUTH("/auth");
 
 
@@ -18,6 +17,6 @@ public enum ApiEndpoints {
     }
 
     public String getPathById(int id) {
-        return path + "/" + id;
+        return path +  "/{id}" ;
     }
 }

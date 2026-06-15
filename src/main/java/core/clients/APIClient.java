@@ -8,6 +8,7 @@ import io.restassured.response.Response;
 import io.restassured.specification.FilterableRequestSpecification;
 import io.restassured.specification.FilterableResponseSpecification;
 import io.restassured.specification.RequestSpecification;
+import core.models.NewBooking;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,6 +24,7 @@ public class APIClient {
     public APIClient() {
         this.baseUrl = determineBaseUrl();
     }
+
     private String determineBaseUrl() {
        String environment = System.getProperty( "env","test");
        String configFileName = "application-" + environment+ ".properties";
@@ -72,7 +74,11 @@ public class APIClient {
                 .post(ApiEndpoints.AUTH.getPath())
                 .then()
                 .statusCode(200)
-                .extract().response();
+                .extract()
+                .response();
+
+
+
 
         token = response.jsonPath().getString("token");
     }
@@ -99,13 +105,15 @@ public class APIClient {
     }
     public Response getBookingById(int id) {
         return getRequestSpec()
+                .pathParam("id", id)
                 .when()
                 .get(ApiEndpoints.BOOKING.getPathById(id))
                 .then()
-                .statusCode(200) // 200 OK для существующего бронирования
                 .extract()
                 .response();
     }
+
+
 
     public Response deleteBooking(int bookingId) {
         return getRequestSpec()
@@ -118,6 +126,81 @@ public class APIClient {
                 .extract()
                 .response();
     }
+    public Response createBooking(String newBooking) {
+        return getRequestSpec()
+                .body(newBooking)
+                .log().all()
+                .when()
+                .post(ApiEndpoints.BOOKING.getPath())
+                .then()
+                .log().all()
+                .extract()
+                .response();
+    }
+    public Response updateBooking(int bookingId, String updatedBooking) {
+        return getRequestSpec()
+                .pathParam("id", bookingId)
+                .body(updatedBooking)
+                .log().all()
+                .when()
+                .put(ApiEndpoints.BOOKING.getPath() + "/{id}")
+                .then()
+                .log().all()
+                .extract()
+                .response();
+    }
+
+    public Response patchBooking(int bookingId, String patchBody) {
+        return getRequestSpec()
+                .pathParam("id", bookingId)
+                .body(patchBody)
+                .log().all()
+                .when()
+                .patch(ApiEndpoints.BOOKING.getPath() + "/{id}") // Используем метод PATCH
+                .then()
+                .log().all()
+                .extract()
+                .response();
+    }
+
+    public Response getBookingsWithFilters(String firstName, String lastName) {
+        RequestSpecification spec = getRequestSpec();
+
+        if (firstName != null) {
+            spec = spec.queryParam("firstname", firstName);
+        }
+        if (lastName != null) {
+            spec = spec.queryParam("lastname", lastName);
+        }
+
+        return spec
+                .when()
+                .get(ApiEndpoints.BOOKING.getPath())
+                .then()
+                .log().all()
+                .extract()
+                .response();
+    }
+
+    public Response getBookingsWithDates(String checkin, String checkout) {
+        RequestSpecification spec = getRequestSpec();
+
+        if (checkin != null) {
+            spec = spec.queryParam("checkin", checkin);
+        }
+        if (checkout != null) {
+            spec = spec.queryParam("checkout", checkout);
+        }
+
+        return spec
+                .when()
+                .get(ApiEndpoints.BOOKING.getPath())
+                .then()
+                .log().all()
+                .extract()
+                .response();
+    }
+
 }
 
 

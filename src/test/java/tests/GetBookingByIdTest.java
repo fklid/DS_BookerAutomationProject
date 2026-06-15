@@ -2,8 +2,11 @@ package tests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import core.clients.APIClient;
-import core.models.Booking;
-import core.models.BookingById;
+import core.models.NewBooking;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Owner;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,6 +27,10 @@ public class GetBookingByIdTest {
     }
 
     @Test
+    @Feature("Booking")
+    @Severity(SeverityLevel.CRITICAL)
+    @Owner("DNShkolnik")
+
     public void testGetBookingById() throws Exception {
         // Выполняем запрос к эндпоинту /booking через APIClient
         Response response = apiClient.getBooking();
@@ -33,6 +40,10 @@ public class GetBookingByIdTest {
     }
 
     @Test
+    @Feature("Booking")
+    @Severity(SeverityLevel.CRITICAL)
+    @Owner("DNShkolnik")
+
     public void testGetBookingByIdBodyCheck() throws Exception{
 
         Response response = apiClient.getBookingById(3);
@@ -41,11 +52,11 @@ public class GetBookingByIdTest {
             assertThat(response.getStatusCode()).isEqualTo(200);
 
             String responseBody = response.getBody().asString();
-            BookingById.BookingByIdOne booking3 = objectMapper.readValue(responseBody, BookingById.BookingByIdOne.class);
+            NewBooking booking = objectMapper.readValue(responseBody, NewBooking.class);
 
-            assertThat(booking3.getFirstname()).isNotNull();
-            assertThat(booking3.getLastname()).isNotNull();
-            assertThat(booking3.isDepositpaid()).isIn(true, false);
+            assertThat(booking.getFirstname()).isNotNull();
+            assertThat(booking.getLastname()).isNotNull();
+            assertThat(booking.isDepositpaid()).isIn(true, false);
         }
         );
     }
